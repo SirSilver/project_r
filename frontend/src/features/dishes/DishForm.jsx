@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid'
 import { Formik, Form, Field, FieldArray } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { array, object, string } from 'yup'
-import useDish from './useDish'
 import API from '../../services/api'
 
 const useStyles = makeStyles(theme => ({
@@ -20,12 +19,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DishForm = () => {
-    const [createDish] = useMutation(dishData => {
-        return API.dishes.create(dishData)
-    })
-    const [createIngredient] = useMutation(ingredientData => {
-        return API.ingredients.create(ingredientData)
-    })
     const classes = useStyles()
     const addButton = push => (
         <Grid item xs={2}>
@@ -51,6 +44,9 @@ const DishForm = () => {
             </Button>
         </Grid>
     )
+
+    const [createDish] = useMutation(dishData => API.dishes.create(dishData))
+    const [createIngredient] = useMutation(ingredientData => API.ingredients.create(ingredientData))
 
     return (
         <Formik
@@ -79,7 +75,7 @@ const DishForm = () => {
             onSubmit={async values => {
                 try {
                     const dishData = await createDish(values.dish)
-                    values.ingredients.map(ingredient => {
+                    values.ingredients.forEach(ingredient => {
                         ingredient.dish = dishData.url
                         try {
                             createIngredient(ingredient)

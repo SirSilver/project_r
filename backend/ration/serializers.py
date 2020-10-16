@@ -21,8 +21,8 @@ class IngredientSerializer(serializers.HyperlinkedModelSerializer):
 class DishSerializer(BaseSerializerWithOwner):
     class Meta:
         model = Dish
-        fields = ['url', 'id', 'name', 'description', 'recipe', 'ingredients', 'created_by']
-        read_only_fields = ['ingredients', 'created_by']
+        fields = ['url', 'id', 'name', 'description', 'recipe', 'ingredients', 'menus', 'created_by']
+        read_only_fields = ['ingredients', 'menus', 'created_by']
 
 
 class MenuSerializer(BaseSerializerWithOwner):

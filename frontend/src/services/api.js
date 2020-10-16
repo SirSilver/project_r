@@ -23,12 +23,24 @@ const dishes = {
     create: async dishData => {
         const { data } = await API.post('/dishes/', dishData)
         return data
+    },
+    update: async (id, dishData) => {
+        const { data } = await API.patch(`/dishes/${id}/`, dishData)
+        return data
     }
 }
 
 const menus = {
     get: async (_, id = '') => {
         const { data } = await API.get(`/menus/${id}`)
+        return data
+    },
+    getDishes: async (_, id) => {
+        const { data } = await API.get(`/menus/${id}/dishes`)
+        return data
+    },
+    getIngredients: async (_, id) => {
+        const { data } = await API.get(`/menus/${id}/ingredients`)
         return data
     },
     create: async menuData => {
@@ -40,6 +52,10 @@ const menus = {
 const ingredients = {
     create: async ingredientData => {
         const { data } = await API.post('/ingredients/', ingredientData)
+        return data
+    },
+    update: async (id, ingredientData) => {
+        const { data } = await API.patch(`/ingredients/${id}/`, ingredientData)
         return data
     }
 }

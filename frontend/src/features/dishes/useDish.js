@@ -4,19 +4,11 @@ import API from '../../services/api'
 const useDish = id => {
     const queryCache = useQueryCache()
     const dish = useQuery(['dish', id], API.dishes.get, {
-        initialData: () => {
-            return queryCache.getQueryData('dishes')?.find(dish => dish.id === Number(id))
-        }
+        initialData: () => queryCache.getQueryData('dishes')?.find(dish => dish.id === Number(id))
     })
-    const ingredients = useQuery(['ingredients', id], API.dishes.getIngredients, {
-        initialData: () => {
-            return queryCache.getQueryData(['ingredients', id])
-        }
-    })
+    const ingredients = useQuery(['ingredients', id], API.dishes.getIngredients)
     const menus = useQuery(['dishMenus', id], API.dishes.getMenus, {
-        initialData: () => {
-            return queryCache.getQueryData(['dishMenus', id])
-        }
+        initialData: () => queryCache.getQueryData('menus')?.filter(menu => menu.dishes.includes(dish.data.url))
     })
 
     return {
