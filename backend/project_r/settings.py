@@ -5,11 +5,12 @@ SECRET_KEY = os.getenv('PROJECT_R_DJANGO_SECRET_KEY')
 # Directories
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -129,6 +130,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DATE_FORMAT': '%B %d, %Y'
+
 }
 
 SITE_ID = 1

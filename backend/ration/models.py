@@ -5,6 +5,9 @@ from django.urls import reverse
 
 class BaseModel(models.Model):
     """Base model"""
+    name = models.CharField('Name', max_length=50)
+    description = models.TextField('Detail description')
+    created_at = models.DateField('Date of creating', auto_now_add=True)
     class Meta:
         abstract = True
 
@@ -17,9 +20,8 @@ class BaseModel(models.Model):
 
 class Dish(BaseModel):
     """Model contains description, recipe and set of ingredients"""
-    name = models.CharField('Dish name', max_length=50)
-    description = models.TextField('Dish description')
     recipe = models.TextField('Dish recipe')
+    image = models.ImageField('Dish image', upload_to='dishes/%Y/%m/%d', null=True, blank=True)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -34,8 +36,7 @@ class Dish(BaseModel):
 
 class Menu(BaseModel):
     """Model contains description and set of dishes"""
-    name = models.CharField('Menu name', max_length=50)
-    description = models.TextField('Menu description')
+    image = models.ImageField('Menu image', upload_to='menus/%Y/%m/%d', null=True, blank=True)
     dishes = models.ManyToManyField(
         Dish,
         blank=True,
@@ -70,6 +71,7 @@ class Menu(BaseModel):
 class Ingredient(BaseModel):
     """Model of required quantity of ingredient for dish"""
     name = models.CharField(verbose_name='Ingredient name', max_length=50)
+    description = None
     quantity = models.FloatField(verbose_name='Required quantity of ingredient for dish')
     dish = models.ForeignKey(
         Dish,

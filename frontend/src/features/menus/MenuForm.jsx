@@ -2,11 +2,10 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { object, string } from 'yup'
+import CenterButton from '../../components/CenterButton'
 import API from '../../services/api'
 
 const useStyles = makeStyles(theme => ({
@@ -15,14 +14,14 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const MenuForm = () => {
+const MenuForm = ({ name, description }) => {
     const [createMenu] = useMutation(menuData => API.menus.create(menuData))
     const history = useHistory()
     const classes = useStyles()
 
     return (
         <Formik
-            initialValues={{name: '', description: ''}}
+            initialValues={{name: name, description: description}}
             validationSchema={object({
                 name: string().required('Please enter a name'),
                 description: string().required('Please enter a description')
@@ -40,13 +39,16 @@ const MenuForm = () => {
                 <Form noValidate onSubmit={handleSubmit}>
                     <Field component={TextField} fullWidth margin='normal' label='Name' name='name' />
                     <Field className={classes.lastField} component={TextField} fullWidth multiline margin='normal' label='Description' name='description' />
-                    <Box display='flex' justifyContent='center'>
-                        <Button color='primary' type='submit' variant='contained'>Save</Button>
-                    </Box>
+                    <CenterButton color='primary' type='submit' variant='contained'>Save</CenterButton>
                 </Form>
             )}
         </Formik>
     )
+}
+
+MenuForm.defaultProps = {
+    name: '',
+    description: ''
 }
 
 export default MenuForm

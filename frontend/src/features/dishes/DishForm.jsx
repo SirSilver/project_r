@@ -1,12 +1,13 @@
 import React from 'react'
 import { useMutation } from 'react-query'
+import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import { Formik, Form, Field, FieldArray } from 'formik'
 import { TextField } from 'formik-material-ui'
 import { array, object, string } from 'yup'
+import CenterButton from '../../components/CenterButton'
 import API from '../../services/api'
 
 const useStyles = makeStyles(theme => ({
@@ -18,8 +19,28 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const DishForm = () => {
+const DishForm = ({ dish, ingredients }) => {
+    const history = useHistory()
+    const [createDish] = useMutation(API.dishes.create)
+    const [updateDish] = useMutation(API.dishes.update)
+    const [createIngredient] = useMutation(API.ingredients.create)
+    const [deleteIngredient] = useMutation(API.ingredients.delete)
+    const [updateIngredient] = useMutation(API.ingredients.update)
     const classes = useStyles()
+    let ingredientsToDelete = []
+
+    const validationSchema = object({
+        dish: object({
+            name: string().required('Please enter a name'),
+            description: string().required('Please enter a description'),
+            recipe: string().required('Please enter a recipe'),
+        }),
+        ingredients: array().of(object({
+            name: string().required('Please enter an ingredient name'),
+            quantity: string().required('Please enter an ingredeint quantity')
+        }))
+    })
+
     const addButton = push => (
         <Grid item xs={2}>
             <Button
@@ -37,7 +58,7 @@ const DishForm = () => {
             <Button
                 fullWidth
                 color='secondary'
-                onClick={() => remove(index)}
+                onClick={() => ingredientsToDelete.push(remove(index))}
                 variant='contained'
             >
                 Remove
@@ -45,43 +66,22 @@ const DishForm = () => {
         </Grid>
     )
 
-    const [createDish] = useMutation(dishData => API.dishes.create(dishData))
-    const [createIngredient] = useMutation(ingredientData => API.ingredients.create(ingredientData))
-
     return (
         <Formik
-            initialValues={{
-                dish: {
-                    name: '',
-                    description: '',
-                    recipe: ''
-                }, 
-                ingredients: [{
-                    name: '',
-                    quantity: ''
-                }]
-            }}
-            validationSchema={object({
-                dish: object({
-                    name: string().required('Please enter a name'),
-                    description: string().required('Please enter a description'),
-                    recipe: string().required('Please enter a recipe'),
-                }),
-                ingredients: array().of(object({
-                    name: string().required('Please enter an ingredient name'),
-                    quantity: string().required('Please enter an ingredeint quantity')
-                }))
-            })}
-            onSubmit={async values => {
+            initialValues={{ dish: dish, ingredients: ingredients }}
+            validationSchema={validationSchema}
+            onSubmit={async ({ dish, ingredients }) => {
                 try {
-                    const dishData = await createDish(values.dish)
-                    values.ingredients.forEach(ingredient => {
-                        ingredient.dish = dishData.url
-                        try {
-                            createIngredient(ingredient)
-                        } catch {}
-                    })
-                } catch (error ) {
+                    const dishData = (dish.id) ? await updateDish(dish) : await createDish(dish)
+                    ingredients.map(async ingredient =>
+                        (ingredient.id)
+                            ? await updateIngredient(ingredient)
+                            : await createIngredient({ ...ingredient, dish: dishData.url })
+                    )
+                    ingredientsToDelete.forEach(ingredient => deleteIngredient(ingredient.id))
+                    history.push('.')
+                }
+                catch (error) {
                     console.log(error)
                 }
             }}
@@ -123,13 +123,23 @@ const DishForm = () => {
                             </Grid>
                         )}
                     />
-                    <Box display='flex' justifyContent='center'>
-                        <Button color='primary' variant='contained' type='submit'>Save</Button>
-                    </Box>
+                    <CenterButton color='primary' variant='contained' type='submit'>Save</CenterButton>
                 </Form>
             )}
         </Formik>
     )
+}
+
+DishForm.defaultProps = {
+    dish: {
+        name: '',
+        description: '',
+        recipe: '',
+    },
+    ingredients: [{
+        name: '',
+        quantity: ''
+    }]
 }
 
 export default DishForm

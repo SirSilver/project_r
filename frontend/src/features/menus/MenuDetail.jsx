@@ -1,11 +1,12 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useMenu from './useMenu'
 import Card from '../../components/Card'
 import Cards from '../../components/Cards'
+import CenterButton from '../../components/CenterButton'
 
 const useStyles = makeStyles(theme => ({
     description: {
@@ -13,6 +14,9 @@ const useStyles = makeStyles(theme => ({
     },
     ingredients: {
         marginBottom: theme.spacing(4)
+    },
+    controlButton: {
+        marginBottom: theme.spacing(2)
     }
 }))
 
@@ -35,6 +39,8 @@ const MenuDetail = () => {
 
     return (
         <>
+            <CenterButton variant='outlined' component={Link} to={`/menus/${id}/edit`}>Edit</CenterButton>
+            <CenterButton color='primary' variant='outlined' component={Link} to={`/menus/${id}/add_dishes`}>Add dish</CenterButton>
             <Typography align='center' variant='h4'>{menu.name}</Typography>
             <Typography className={classes.description}>{menu.description}</Typography>
             <Grid container className={classes.ingredients} spacing={2}>

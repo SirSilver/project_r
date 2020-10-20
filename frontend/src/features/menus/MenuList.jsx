@@ -12,6 +12,7 @@ const MenuList = () => {
         <Card
             key={menu.id}
             title={menu.name}
+            created_at={menu.created_at}
             content={menu.description}
             link={`/menus/${menu.id}`} 
         />

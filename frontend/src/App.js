@@ -14,6 +14,9 @@ import Register from './features/auth/Register'
 import DishDetail from './features/dishes/DishDetail'
 import DishForm from './features/dishes/DishForm'
 import DishList from './features/dishes/DishList'
+import EditDishForm from './features/dishes/EditDishForm.jsx'
+import AddDishes from './features/menus/AddDishes'
+import EditMenuForm from './features/menus/EditMenuForm'
 import MenuDetail from './features/menus/MenuDetail'
 import MenuForm from './features/menus/MenuForm'
 import MenuList from './features/menus/MenuList'
@@ -42,10 +45,13 @@ const App = () => {
                 <Paper className={classes.root}>
                     <NavBar />
                     <Grid container justify='center'>
-                        <Grid item xs={11} md={8} lg={5}>
+                        <Grid item xs={11} md={9} lg={7}>
                             <Switch>
                                 <ProtectedRoute exact path='/profile' component={Profile} />
+                                <ProtectedRoute exact path='/dishes/:id/edit' component={EditDishForm} />
                                 <ProtectedRoute exact path='/dishes/create' component={DishForm} />
+                                <ProtectedRoute exact path='/menus/:id/add_dishes' component={AddDishes} />
+                                <ProtectedRoute exact path='/menus/:id/edit' component={EditMenuForm} />
                                 <ProtectedRoute exact path='/menus/create' component={MenuForm} />
                                 <Route exact path='/dishes/:id' component={DishDetail} />
                                 <Route exact path='/dishes' component={DishList} />

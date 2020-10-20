@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from .models import Ingredient, Dish, Menu
 from .serializers import IngredientSerializer, DishSerializer, MenuIngredientsSerializer, MenuSerializer
-from .services import ingredient_counter
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -60,8 +59,10 @@ class MenuViewSet(viewsets.ModelViewSet):
     @add_dish.mapping.post
     def add_dish_to_menu(self, request, pk=None):
         """Add dishes to menu"""
+        print(request.data)
         for dish_id in request.data:
             self.get_object().dishes.add(Dish.objects.get(pk=dish_id))
+            print('DISHES', self.get_object().dishes.all())
         return Response('Dishes were added')
 
     @action(methods=['post'], detail=True)

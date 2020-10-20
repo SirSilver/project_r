@@ -1,11 +1,12 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import useDish from './useDish'
 import Card from '../../components/Card'
 import Cards from '../../components/Cards'
+import CenterButton from '../../components/CenterButton'
 
 const useStyles = makeStyles(theme => ({
     description: {
@@ -15,8 +16,8 @@ const useStyles = makeStyles(theme => ({
 
 const DishDetail = () => {
     const { id } = useParams()
-    const { data: dish, ingredients, menus, isLoading } = useDish(id)
     const classes = useStyles()
+    const { data: dish, ingredients, menus, isLoading } = useDish(id)
 
     if (isLoading) return 'Loading...'
 
@@ -31,6 +32,7 @@ const DishDetail = () => {
 
     return (
         <>
+            <CenterButton variant='outlined' component={Link} to={`/dishes/${id}/edit`}>Edit</CenterButton>
             <Typography align='center' variant='h4'>{dish.name}</Typography>
             <Typography className={classes.description}>
                 {dish.description}
