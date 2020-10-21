@@ -28,6 +28,10 @@ const dishes = {
         const { data } = await API.get(`/dishes/${id}/menus`)
         return data
     },
+    setImage: async ({ id, image }) => {
+        const { data } = await API.post(`/dishes/${id}/set_image/`, image)
+        return data
+    },
     update: async dishData => {
         const { data } = await API.patch(`/dishes/${dishData.id}/`, dishData)
         return data

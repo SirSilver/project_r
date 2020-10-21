@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Card = ({ title, created_at, content, action, link }) => {
+const Card = ({ title, created_at, image, content, action, link }) => {
     const classes = useStyles()
 
     return (
@@ -33,7 +33,7 @@ const Card = ({ title, created_at, content, action, link }) => {
                 title={title}
                 subheader={created_at}
             />
-            <MUICardMedia className={classes.media} image={DishPlaceholder} title={title} />
+            <MUICardMedia className={classes.media} image={image} title={title} />
             <MUICardContent>
                 <Typography>{content}</Typography>
             </MUICardContent>
@@ -43,6 +43,10 @@ const Card = ({ title, created_at, content, action, link }) => {
             </MUICardActions>
         </MUICard>
     )
+}
+
+Card.defaultProps = {
+    image: DishPlaceholder
 }
 
 export default Card

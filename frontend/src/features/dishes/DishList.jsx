@@ -12,6 +12,7 @@ const DishList = () => {
         <Card
             key={dish.id}
             title={dish.name}
+            image={dish.image || undefined}
             created_at={dish.created_at}
             content={dish.description}
             link={`/dishes/${dish.id}`} 

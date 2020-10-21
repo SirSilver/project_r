@@ -22,14 +22,14 @@ class DishSerializer(BaseSerializerWithOwner):
     class Meta:
         model = Dish
         fields = ['url', 'id', 'name', 'description', 'recipe', 'image', 'ingredients', 'menus', 'created_at', 'created_by']
-        read_only_fields = ['ingredients', 'menus', 'created_at', 'created_by']
+        read_only_fields = ['ingredients', 'menus', 'image', 'created_at', 'created_by']
 
 
 class MenuSerializer(BaseSerializerWithOwner):
     class Meta:
         model = Menu
         fields = ['url', 'id', 'name', 'description', 'image', 'dishes', 'created_at', 'created_by']
-        read_only_fields = ['dishes', 'created_at', 'created_by']
+        read_only_fields = ['dishes', 'image', 'created_at', 'created_by']
 
 
 class MenuIngredientsSerializer(serializers.HyperlinkedModelSerializer):

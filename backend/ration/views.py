@@ -1,7 +1,11 @@
 from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import action
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.decorators import action, parser_classes
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
+from io import BytesIO
+from PIL import Image
 from .models import Ingredient, Dish, Menu
 from .serializers import IngredientSerializer, DishSerializer, MenuIngredientsSerializer, MenuSerializer
 from .permissions import IsOwnerOrReadOnly
@@ -12,6 +16,23 @@ class DishViewSet(viewsets.ModelViewSet):
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+    @action(methods=['post'], detail=True)
+    @parser_classes((FormParser, MultiPartParser))
+    def set_image(self, request, pk=None):
+        """Set image for dish"""
+        if 'image' in request.data:
+            self.object = self.get_object()
+            self.object.image.delete()
+            image = request.data['image']
+            resized_image = Image.open(request.data['image'])
+            resized_image = resized_image.resize((1099, 618))
+            buffer = BytesIO()
+            resized_image.save(buffer, format='JPEG')
+            self.object.image.save(image.name, buffer)
+
+            return Response(status=HTTP_201_CREATED)
+        return Response(status=HTTP_400_BAD_REQUEST)
 
     @action(methods=['get'], detail=True, serializer_class=IngredientSerializer)
     def ingredients(self, request, pk=None):
