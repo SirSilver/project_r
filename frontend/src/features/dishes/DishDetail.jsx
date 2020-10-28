@@ -38,7 +38,7 @@ const DishDetail = () => {
             </Grid>
             <Grid container item spacing={2} component={Paper}>
                 <Grid item xs={12} lg={6}>
-                    <Image aspectRatio={16/9} src={dish.image} />
+                    <Image aspectRatio={16/9} src={dish.image || DishPlaceholder} />
                 </Grid>
                 <Grid container item direction='column' justify='space-between' lg={6} spacing={1}>
                     <Grid item component={Typography} variant='h4'>{dish.name}</Grid>

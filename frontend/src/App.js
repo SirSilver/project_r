@@ -23,7 +23,7 @@ import MenuList from './features/menus/MenuList'
 
 const theme = createMuiTheme({
     typography: {
-        fontSize: 16
+        fontSize: 15
     },
 })
 
@@ -45,7 +45,7 @@ const App = () => {
                 <Paper className={classes.root}>
                     <NavBar />
                     <Grid container justify='center'>
-                        <Grid item xs={11} md={9} lg={7}>
+                        <Grid item container xs={11} md={9} lg={7}>
                             <Switch>
                                 <ProtectedRoute exact path='/profile' component={Profile} />
                                 <ProtectedRoute exact path='/dishes/:id/edit' component={EditDishForm} />

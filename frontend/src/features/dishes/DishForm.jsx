@@ -11,9 +11,6 @@ import CenterButton from '../../components/CenterButton'
 import API from '../../services/api'
 
 const useStyles = makeStyles(theme => ({
-    submitButton: {
-        textAlign: 'center'
-    },
     ingredients: {
         marginBottom: theme.spacing(2)
     }

@@ -1,45 +1,81 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@material-ui/core/DialogActions'
+import IconButton from '@material-ui/core/IconButton'
 import MUICard from '@material-ui/core/Card'
+import MUICardActionArea from '@material-ui/core/CardActionArea'
 import MUICardActions from '@material-ui/core/CardActions'
 import MUICardContent from '@material-ui/core/CardContent'
 import MUICardMedia from '@material-ui/core/CardMedia'
-import MUICardHeader from '@material-ui/core/CardHeader'
 import Typography from '@material-ui/core/Typography'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import DishPlaceholder from '../static/dish_placeholder.jpg'
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        height: '100%',
+        flexDirection: 'column'
+    },
     media: {
-        height: 200,
+        width: '100%',
+        paddingBottom: '56.25%',
+    },
+    avatar: {
+        width: 50,
+        height: 50,
+        border: '2px solid #fff',
+        margin: '-26px 10px 0 auto',
+    },
+    title: {
+        textTransform: 'capitalize'
+    },
+    content: {
+        flexGrow: 1,
+        marginTop: -13,
+        paddingBottom: 0,
+        paddingTop: 0
+    },
+    actions: {
     }
 }))
 
-const Card = ({ title, created_at, image, content, action, link }) => {
+const Card = ({ title, image, action, dialogContent, dialogActions }) => {
+    const [open, setOpen] = useState(false)
     const classes = useStyles()
 
+    const handleClick = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     return (
-        <MUICard>
-            <MUICardHeader
-                avatar={
-                    <>
-                        <Avatar>
-                            H
-                        </Avatar>
-                    </>
-                }
-                title={title}
-                subheader={created_at}
-            />
-            <MUICardMedia className={classes.media} image={image} title={title} />
-            <MUICardContent>
-                <Typography>{content}</Typography>
+        <MUICard className={classes.root}>
+            <MUICardActionArea onClick={handleClick} className={classes.actionArea}>
+                <MUICardMedia image={image} title={title} className={classes.media} />
+            </MUICardActionArea>
+            <Dialog fullWidth maxWidth='xs' open={open} onClose={handleClose}>
+                <DialogContent>
+                    {dialogContent}
+                </DialogContent>
+                <DialogActions>
+                    {dialogActions}
+                </DialogActions>
+            </Dialog>
+            <Avatar className={classes.avatar}>S</Avatar>
+            <MUICardContent className={classes.content}>
+                <Typography className={classes.title} variant='h6'>{title}</Typography>
             </MUICardContent>
-            <MUICardActions>
+            <MUICardActions className={classes.actions}>
                 {action}
-                {(link) && <Button component={Link} to={link}>View</Button>}
+                <IconButton>
+                    <FavoriteBorderIcon />
+                </IconButton>
             </MUICardActions>
         </MUICard>
     )
