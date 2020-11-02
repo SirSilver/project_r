@@ -4,10 +4,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormGroup from '@material-ui/core/FormGroup'
 import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import Switch from '@material-ui/core/Switch'
 import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -35,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const NavBar = () => {
+const NavBar = ({ colorTheme, setColorTheme }) => {
     const { pathname } = useLocation()
     const [value, setValue] = useState(() => {
         if (pathname.startsWith('/dishes')) return 0
@@ -103,6 +106,21 @@ const NavBar = () => {
                     </Grid>
                     <Grid item xs={3}>
                         <Box display='flex' justifyContent='flex-end'>
+                            <FormGroup row>
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={colorTheme === 'dark'}
+                                            onChange={() => {
+                                                const newColor = colorTheme === 'dark' ? 'light' : 'dark'
+                                                localStorage.setItem('colorTheme', newColor)
+                                                setColorTheme(newColor)
+                                            }}
+                                        />
+                                    }
+                                    label='Dark mode'
+                                />
+                            </FormGroup>
                             {
                                 isAuth
                                     ? LoggedInNav
