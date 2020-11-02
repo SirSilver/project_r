@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         width: 50,
         height: 50,
-        border: '2px solid #fff',
+        border: `2px solid ${theme.palette.background.paper}`,
         margin: '-26px 10px 0 auto',
     },
     title: {
@@ -58,19 +58,19 @@ const Card = ({ image, title, dialogContent, dialogActions }) => {
         <MUICard className={classes.root}>
             <MUICardActionArea onClick={handleClick} className={classes.actionArea}>
                 <MUICardMedia image={image} title={title} className={classes.media} />
+                <Dialog fullWidth maxWidth='xs' open={open} onClose={handleClose}>
+                    <DialogContent>
+                        {dialogContent}
+                    </DialogContent>
+                    <DialogActions>
+                        {dialogActions}
+                    </DialogActions>
+                </Dialog>
+                <Avatar className={classes.avatar}>S</Avatar>
+                <MUICardContent className={classes.content}>
+                    <Typography className={classes.title} variant='h6'>{title}</Typography>
+                </MUICardContent>
             </MUICardActionArea>
-            <Dialog fullWidth maxWidth='xs' open={open} onClose={handleClose}>
-                <DialogContent>
-                    {dialogContent}
-                </DialogContent>
-                <DialogActions>
-                    {dialogActions}
-                </DialogActions>
-            </Dialog>
-            <Avatar className={classes.avatar}>S</Avatar>
-            <MUICardContent className={classes.content}>
-                <Typography className={classes.title} variant='h6'>{title}</Typography>
-            </MUICardContent>
         </MUICard>
     )
 }
