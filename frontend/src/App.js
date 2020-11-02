@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme, makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import NavBar from './components/NavBar'
 import Login from './features/auth/Login'
@@ -29,7 +29,10 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles(theme => ({
     root: {
-        height: '100vh'
+        height: '100%'
+    },
+    content: {
+        width: '75%'
     }
 }))
 
@@ -44,24 +47,22 @@ const App = () => {
                 <CssBaseline />
                 <Paper className={classes.root}>
                     <NavBar />
-                    <Grid container justify='center'>
-                        <Grid item container xs={11} md={9} lg={7}>
-                            <Switch>
-                                <ProtectedRoute exact path='/profile' component={Profile} />
-                                <ProtectedRoute exact path='/dishes/:id/edit' component={EditDishForm} />
-                                <ProtectedRoute exact path='/dishes/create' component={DishForm} />
-                                <ProtectedRoute exact path='/menus/:id/add_dishes' component={AddDishes} />
-                                <ProtectedRoute exact path='/menus/:id/edit' component={EditMenuForm} />
-                                <ProtectedRoute exact path='/menus/create' component={MenuForm} />
-                                <Route exact path='/dishes/:id' component={DishDetail} />
-                                <Route exact path='/dishes' component={DishList} />
-                                <Route exact path='/menus/:id' component={MenuDetail} />
-                                <Route exact path='/menus' component={MenuList} />
-                                <Route exact path='/login' component={Login} />
-                                <Route exact path='/register' component={Register} />
-                            </Switch>
-                        </Grid>
-                    </Grid>
+                    <Container>
+                        <Switch>
+                            <ProtectedRoute exact path='/profile' component={Profile} />
+                            <ProtectedRoute exact path='/dishes/:id/edit' component={EditDishForm} />
+                            <ProtectedRoute exact path='/dishes/create' component={DishForm} />
+                            <ProtectedRoute exact path='/menus/:id/add_dishes' component={AddDishes} />
+                            <ProtectedRoute exact path='/menus/:id/edit' component={EditMenuForm} />
+                            <ProtectedRoute exact path='/menus/create' component={MenuForm} />
+                            <Route exact path='/dishes/:id' component={DishDetail} />
+                            <Route exact path='/dishes' component={DishList} />
+                            <Route exact path='/menus/:id' component={MenuDetail} />
+                            <Route exact path='/menus' component={MenuList} />
+                            <Route exact path='/login' component={Login} />
+                            <Route exact path='/register' component={Register} />
+                        </Switch>
+                    </Container>
                 </Paper>
             </ThemeProvider>
         </ReactQueryCacheProvider>
