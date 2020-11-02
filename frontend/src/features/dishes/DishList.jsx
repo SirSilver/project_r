@@ -11,17 +11,7 @@ const DishList = () => {
 
     if (isLoading) return 'Loading...'
 
-    const dishList = dishes.map(dish => {
-        return <Card
-            key={dish.id}
-            title={dish.name}
-            image={dish.image || undefined}
-            dialogContent={<Typography>{dish.description}</Typography>}
-            dialogActions={<Button color='primary' component={Link} to={`/dishes/${dish.id}`}>Details</Button>}
-        />
-    })
-
-    return <Cards>{dishList}</Cards>
+    return <Cards items={dishes} type='dishes' />
 }
 
 export default DishList

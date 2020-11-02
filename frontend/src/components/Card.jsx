@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Card = ({ title, image, action, dialogContent, dialogActions }) => {
+const Card = ({ image, title, dialogContent, dialogActions }) => {
     const [open, setOpen] = useState(false)
     const classes = useStyles()
 
@@ -71,18 +71,8 @@ const Card = ({ title, image, action, dialogContent, dialogActions }) => {
             <MUICardContent className={classes.content}>
                 <Typography className={classes.title} variant='h6'>{title}</Typography>
             </MUICardContent>
-            <MUICardActions className={classes.actions}>
-                {action}
-                <IconButton>
-                    <FavoriteBorderIcon />
-                </IconButton>
-            </MUICardActions>
         </MUICard>
     )
-}
-
-Card.defaultProps = {
-    image: DishPlaceholder
 }
 
 export default Card
