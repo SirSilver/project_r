@@ -11,14 +11,13 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-### React
-node_modules/
-.env
-
 # dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.js
+
+# media
+media/
 
 # testing
 /coverage
@@ -28,6 +27,7 @@ node_modules/
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
