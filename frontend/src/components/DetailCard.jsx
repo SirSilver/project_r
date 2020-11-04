@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     }
 })
 
-const DetailCard = ({ image, title, body, ...rest }) => {
+const DetailCard = ({ image, title, body, created_at, created_by, ...rest }) => {
     const classes = useStyles()
 
     return (

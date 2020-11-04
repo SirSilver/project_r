@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import Card from '../../components/Card'
 import Cards from '../../components/Cards'
 import API from '../../services/api'
 
@@ -60,22 +59,12 @@ const AddDishes = () => {
     if (!dishesToAdd.length && isSuccess)
         return <Typography align='center' variant='h4'>No dishes to add</Typography>
 
-    const dishesToAddCards = dishesToAdd.map(dishToAdd => 
-        <Card
-            key={dishToAdd.id}
-            title={dishToAdd.name}
-            created_at={dishToAdd.created_at}
-            content={dishToAdd.description}
-            action={addList.includes(dishToAdd.id) ? removeButton(dishToAdd.id) : addButton(dishToAdd.id)}
-        />
-    )
-
     return (
         <>
             <Box align='center' className={classes.saveButton}>
                 {saveButton}{cancelButton}
             </Box>
-            <Cards>{dishesToAddCards}</Cards>
+            <Cards items={dishesToAdd} type='dishes' />
         </>
     )
 }

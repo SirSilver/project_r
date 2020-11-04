@@ -23,6 +23,7 @@ const MenuDetail = () => {
     return (
         <>
             <CenterButton variant='outlined' component={Link} to={`/menus/${id}/edit`}>Edit</CenterButton>
+            <CenterButton variant='outlined' component={Link} to={`/menus/${id}/add_dishes`}>Add dishes</CenterButton>
             <Details
                 image={menu.image}
                 title={menu.name}

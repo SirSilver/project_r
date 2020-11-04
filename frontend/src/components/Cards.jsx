@@ -7,7 +7,7 @@ import DishPlaceholder from '../static/dish_placeholder.jpg'
 
 const Cards = ({ items, type }) => {
     const cards = items.map(item => 
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid key={item.id} item xs={12} sm={6} md={4}>
             <Card
                 image={item.image || DishPlaceholder}
                 title={item.name}

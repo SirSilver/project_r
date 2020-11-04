@@ -4,15 +4,11 @@ import Avatar from '@material-ui/core/Avatar'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogActions from '@material-ui/core/DialogActions'
-import IconButton from '@material-ui/core/IconButton'
 import MUICard from '@material-ui/core/Card'
 import MUICardActionArea from '@material-ui/core/CardActionArea'
-import MUICardActions from '@material-ui/core/CardActions'
 import MUICardContent from '@material-ui/core/CardContent'
 import MUICardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
-import DishPlaceholder from '../static/dish_placeholder.jpg'
 
 const useStyles = makeStyles(theme => ({
     root: {
